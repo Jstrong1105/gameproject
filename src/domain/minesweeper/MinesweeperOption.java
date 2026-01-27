@@ -3,9 +3,9 @@ package domain.minesweeper;
 /**
  * 지뢰찾기 옵션 값
  */
-class MinesweeperOption {
+public class MinesweeperOption {
 
-    private final int MIN_SIZE = 5;
+    private final int MIN_SIZE = 10;
     private final int MAX_SIZE = 20;
     private int size = MIN_SIZE;
     int getSize() { return size; }

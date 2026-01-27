@@ -50,7 +50,7 @@ public class InputHandler {
     {
         while(true)
         {
-            int num = readInt(prompt + " (" + min + " ~ " + max + " )");
+            int num = readInt(prompt + " ( " + min + " ~ " + max + " )");
 
             if(num >= min && num <= max)
             {

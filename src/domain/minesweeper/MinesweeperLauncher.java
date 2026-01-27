@@ -5,7 +5,7 @@ import domain.base.GameResultType;
 import domain.base.GameTemplate;
 import util.InputHandler;
 
-public class MinesweeperLauncher extends GameTemplate {
+class MinesweeperLauncher extends GameTemplate {
 
     private final int BOARD_SIZE;
     private final int WEIGHT;
@@ -20,7 +20,7 @@ public class MinesweeperLauncher extends GameTemplate {
     private int openFlag;
     private boolean first;
 
-    public MinesweeperLauncher(InputHandler input, MinesweeperOption option)
+    MinesweeperLauncher(InputHandler input, MinesweeperOption option)
     {
         super(input);
         BOARD_SIZE = option.getSize();
@@ -48,7 +48,7 @@ public class MinesweeperLauncher extends GameTemplate {
             System.out.print("=");
         }
 
-        System.out.println("지뢰찾기");
+        System.out.print("지뢰찾기");
 
         for(int i = 0; i < BOARD_SIZE * 2; i++) {
             System.out.print("=");
@@ -90,6 +90,7 @@ public class MinesweeperLauncher extends GameTemplate {
         }
 
         if(first){
+            first = false;
             board.firstMine(playerRow,playerCol);
         }
 
