@@ -1,6 +1,5 @@
 package domain.minesweeper;
 
-import domain.base.GameOption;
 import util.InputHandler;
 
 enum MinesweeperOptionMenu {
