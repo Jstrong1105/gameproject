@@ -5,7 +5,7 @@ import domain.base.GameResultType;
 import domain.base.GameTemplate;
 import util.InputHandler;
 
-class MinesweeperLauncher extends GameTemplate {
+public class MinesweeperLauncher extends GameTemplate {
 
     private final int BOARD_SIZE;
     private final int WEIGHT;
@@ -20,7 +20,7 @@ class MinesweeperLauncher extends GameTemplate {
     private int openFlag;
     private boolean first;
 
-    MinesweeperLauncher(InputHandler input, MinesweeperOption option)
+    public MinesweeperLauncher(InputHandler input, MinesweeperOption option)
     {
         super(input);
         BOARD_SIZE = option.getSize();
@@ -130,7 +130,7 @@ class MinesweeperLauncher extends GameTemplate {
         {
             System.out.println();
             try{
-                Thread.sleep(10);
+                Thread.sleep(5);
             }
             catch (InterruptedException e) {
                  throw new RuntimeException(e);

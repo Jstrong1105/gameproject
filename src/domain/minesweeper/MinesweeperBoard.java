@@ -163,14 +163,17 @@ class MinesweeperBoard {
 
             for (int j = 0; j < BOARD_SIZE; j++) {
                 char ch;
-                if (board[i][j].isClosed())
+                if (board[i][j].isClosed()) {
                     ch = CLOSED_SHAPE;
-                else if (board[i][j].isFlagged())
+                }
+                else if (board[i][j].isFlagged()) {
                     ch = FLAGGED_SHAPE;
+                }
                 else {
                     if (board[i][j].isMine()) {
                         ch = MINE_SHAPE;
-                    } else {
+                    }
+                    else {
                         ch = OPENED_SHAPE[board[i][j].getAdjacentMines()];
                     }
                 }
@@ -198,6 +201,7 @@ class MinesweeperBoard {
     }
 
     // 테스트용 메인 메소드
+    /*
     public static void main(String[] args)
     {
         MinesweeperBoard board = new MinesweeperBoard(10,20);
@@ -208,4 +212,5 @@ class MinesweeperBoard {
 
         board.printBoard();
     }
+    */
 }
