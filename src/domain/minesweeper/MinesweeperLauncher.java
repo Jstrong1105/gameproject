@@ -9,9 +9,9 @@ public class MinesweeperLauncher extends GameTemplate {
 
     private final int BOARD_SIZE;
     private final int WEIGHT;
-    private final int MIN_LEVEL = 1;
-    private final int MAX_LEVEL = 3;
-    private final int[] LEVEL_LIST = {0,10,5,4};
+    private static final int MIN_LEVEL = 1;
+    private static final int MAX_LEVEL = 3;
+    private static final int[] LEVEL_LIST = {1,10,5,4};
 
     private MinesweeperBoard board;
 

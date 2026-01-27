@@ -9,12 +9,12 @@ class MinesweeperBoard {
 
     // 상수
     private final int BOARD_SIZE;
-    private final int[] LX = {-1, 0, 1, -1, 1, -1, 0, 1};
-    private final int[] LY = {-1, -1, -1, 0, 0, 1, 1, 1};
-    private final char CLOSED_SHAPE = '■';
-    private final char[] OPENED_SHAPE = {'□', '1', '2', '3', '4', '5', '6', '7', '8'};
-    private final char FLAGGED_SHAPE = '§';
-    private final char MINE_SHAPE = '*';
+    private static final int[] LX = {-1, 0, 1, -1, 1, -1, 0, 1};
+    private static final int[] LY = {-1, -1, -1, 0, 0, 1, 1, 1};
+    private static final char CLOSED_SHAPE = '■';
+    private static final char[] OPENED_SHAPE = {'□', '1', '2', '3', '4', '5', '6', '7', '8'};
+    private static final char FLAGGED_SHAPE = '§';
+    private static final char MINE_SHAPE = '*';
 
     // 랜덤
     private final Random rd;
@@ -199,18 +199,4 @@ class MinesweeperBoard {
             }
         }
     }
-
-    // 테스트용 메인 메소드
-    /*
-    public static void main(String[] args)
-    {
-        MinesweeperBoard board = new MinesweeperBoard(10,20);
-
-        board.flagCell(1,1);
-
-        board.openCell(5,5);
-
-        board.printBoard();
-    }
-    */
 }
