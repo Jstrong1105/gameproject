@@ -5,8 +5,8 @@ package domain.minesweeper;
  */
 public class MinesweeperOption {
 
-    private final int MIN_SIZE = 10;
-    private final int MAX_SIZE = 20;
+    final int MIN_SIZE = 10;
+    final int MAX_SIZE = 20;
     private int size = MIN_SIZE;
     int getSize() { return size; }
 
@@ -18,8 +18,8 @@ public class MinesweeperOption {
         this.size = size;
     }
 
-    private final int MIN_WEIGHT = 1;
-    private final int MAX_WEIGHT = 3;
+    final int MIN_WEIGHT = 1;
+    final int MAX_WEIGHT = 3;
     private int weight = MIN_WEIGHT;
     int getWeight() { return weight; }
 

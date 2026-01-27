@@ -44,6 +44,8 @@ class MinesweeperLauncher extends GameTemplate {
     @Override
     protected void render() {
 
+        cleanScreen();
+
         for(int i = 0; i < BOARD_SIZE * 2; i++) {
             System.out.print("=");
         }
@@ -108,7 +110,7 @@ class MinesweeperLauncher extends GameTemplate {
     @Override
     protected void finish(GameResult result) {
         board.openBoom();
-        board.printBoard();
+        render();
         System.out.println("게임이 종료되었습니다.");
 
         if(result.isWin()){
@@ -119,5 +121,20 @@ class MinesweeperLauncher extends GameTemplate {
         }
 
         setPlaying(false);
+    }
+
+    // 화면 청소하기
+    private void cleanScreen() {
+
+        for(int i = 0; i < 30; i++)
+        {
+            System.out.println();
+            try{
+                Thread.sleep(10);
+            }
+            catch (InterruptedException e) {
+                 throw new RuntimeException(e);
+            }
+        }
     }
 }
