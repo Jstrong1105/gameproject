@@ -64,12 +64,13 @@ public class InputHandler {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void clearBuffer()
     {
         try
         {
             while(BR.ready()){
-                int num = BR.read();
+                BR.read();
                 System.out.println("입력을 초기화하고 있습니다.");
             }
         }
