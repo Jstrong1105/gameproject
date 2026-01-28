@@ -69,7 +69,7 @@ public class InputHandler {
         try
         {
             while(BR.ready()){
-                BR.read();
+                int num = BR.read();
                 System.out.println("입력을 초기화하고 있습니다.");
             }
         }
