@@ -30,6 +30,8 @@ public class MinesweeperLauncher extends GameTemplate {
     @Override
     protected void initialize() {
 
+        input.clearBuffer();
+
         System.out.println("지뢰찾기 게임입니다.");
 
         int level = input.readIntRange("난이도를 입력해주세요.",MIN_LEVEL,MAX_LEVEL);
@@ -69,6 +71,8 @@ public class MinesweeperLauncher extends GameTemplate {
 
     @Override
     protected void handleInput() {
+
+        input.clearBuffer();
 
         playerRow = 0;
         playerCol = 0;
@@ -130,7 +134,7 @@ public class MinesweeperLauncher extends GameTemplate {
         {
             System.out.println();
             try{
-                Thread.sleep(5);
+                Thread.sleep(10);
             }
             catch (InterruptedException e) {
                  throw new RuntimeException(e);

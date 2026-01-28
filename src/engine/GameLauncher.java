@@ -31,6 +31,8 @@ public class GameLauncher {
 
        while(run) {
 
+           input.clearBuffer();
+
            System.out.println("\n\n");
 
            System.out.println("====게임 런처====");
