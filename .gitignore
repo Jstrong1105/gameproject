@@ -1,0 +1,13 @@
+# IntelliJ 관련 설정 파일 (개인 설정이므로 공유 금지)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# 컴파일된 결과물 (소스 코드가 아니므로 공유 금지)
+out/
+bin/
+
+# OS 관련 (시스템 생성 파일)
+.DS_Store
+Thumbs.db
