@@ -1,23 +1,40 @@
 package domain.memorygame;
 
 import domain.TrumpCard.Card;
+import domain.TrumpCard.CardDeck;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 /**
  * 바닥에 깔려있는 카드들을 관리할 클래스
  */
 class MemoryBoard {
 
-    List<Card> board;
+    private final List<Card> board;
 
-    MemoryBoard(){
+    MemoryBoard(int size, int pair){
+
+        CardDeck dealerDeck = new CardDeck();
         board = new ArrayList<>();
+
+        for(int i = 0; i < size; i++){
+
+            Card card = dealerDeck.drawCard();
+
+            board.add(card);
+
+            for(int j = 1; j < pair; j++){
+                board.add(card.copyCard());
+            }
+        }
+
+        Collections.shuffle(board);
     }
 
     // 카드 선택하기
-    Card flipCard(int number){
+    Card drawCard(int number){
 
         return board.get(number);
     }
@@ -27,11 +44,4 @@ class MemoryBoard {
 
         return board.get(number).isOpen();
     }
-
-    // 카드 열기
-    void openCard(int number){
-
-        board.get(number).openCard();
-    }
-
 }

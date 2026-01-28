@@ -1,15 +1,25 @@
 package domain.base;
 
+import domain.memorygame.MemoryGameOption;
 import domain.minesweeper.MinesweeperOption;
 
 public class GameOption {
 
-    private MinesweeperOption MINESWEEPER_OPTION;
+    private MinesweeperOption minesweeperOption;
     public MinesweeperOption getMinesweeperOption()
     {
-        if (MINESWEEPER_OPTION == null){
-            MINESWEEPER_OPTION = new MinesweeperOption();
+        if (minesweeperOption == null){
+            minesweeperOption = new MinesweeperOption();
         }
-        return MINESWEEPER_OPTION;
+        return minesweeperOption;
+    }
+
+    private MemoryGameOption memoryGameOption;
+    public MemoryGameOption getMemoryGameOption()
+    {
+        if(memoryGameOption == null){
+            memoryGameOption = new MemoryGameOption();
+        }
+        return memoryGameOption;
     }
 }

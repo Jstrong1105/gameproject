@@ -64,6 +64,7 @@ public class InputHandler {
         }
     }
 
+    // 버퍼를 비우는 메소드
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void clearBuffer()
     {

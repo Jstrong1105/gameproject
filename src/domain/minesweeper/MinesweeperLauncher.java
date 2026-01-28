@@ -7,11 +7,13 @@ import util.InputHandler;
 
 public class MinesweeperLauncher extends GameTemplate {
 
+    private static final int OPEN_NUMBER = 1;
+    private final int FLAG_NUMBER = 2;
     private final int BOARD_SIZE;
     private final int WEIGHT;
     private static final int MIN_LEVEL = 1;
     private static final int MAX_LEVEL = 3;
-    private static final int[] LEVEL_LIST = {1,10,5,4};
+    private static final int[] LEVEL_LIST = {10,5,4};
 
     private MinesweeperBoard board;
 
@@ -36,7 +38,7 @@ public class MinesweeperLauncher extends GameTemplate {
 
         int level = input.readIntRange("난이도를 입력해주세요.",MIN_LEVEL,MAX_LEVEL);
 
-        int boomCount = BOARD_SIZE * BOARD_SIZE / LEVEL_LIST[level] * WEIGHT;
+        int boomCount = BOARD_SIZE * BOARD_SIZE / LEVEL_LIST[level-1] * WEIGHT;
 
         board = new MinesweeperBoard(BOARD_SIZE,boomCount);
 
@@ -80,7 +82,7 @@ public class MinesweeperLauncher extends GameTemplate {
 
         playerRow = input.readIntRange("열 번호 입력",1,BOARD_SIZE);
         playerCol = input.readIntRange("행 번호 입력",1,BOARD_SIZE);
-        openFlag = input.readIntRange("오픈(1)/깃발(2)",1,2);
+        openFlag = input.readIntRange("오픈("+ OPEN_NUMBER +")/깃발("+ FLAG_NUMBER +")",OPEN_NUMBER,FLAG_NUMBER);
 
         playerRow--;
         playerCol--;
@@ -89,7 +91,7 @@ public class MinesweeperLauncher extends GameTemplate {
     @Override
     protected void update() {
 
-        if(openFlag == 2)
+        if(openFlag == FLAG_NUMBER)
         {
             board.flagCell(playerRow,playerCol);
             return;
