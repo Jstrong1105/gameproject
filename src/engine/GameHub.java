@@ -16,18 +16,18 @@ enum GameHub {
 
 
     GameHub(int number, String name, String explain, GameMaker creator, OptionSetter setter){
-        this.number = number;
-        this.name = name;
-        this.explain = explain;
-        this.creator = creator;
-        this.setter = setter;
+        NUMBER = number;
+        NAME = name;
+        EXPLAIN = explain;
+        CREATOR = creator;
+        SETTER = setter;
     }
 
-    private final int number;
-    private final String name;
-    private final String explain;
-    private final GameMaker creator;
-    private final OptionSetter setter;
+    private final int NUMBER;
+    private final String NAME;
+    private final String EXPLAIN;
+    private final GameMaker CREATOR;
+    private final OptionSetter SETTER;
 
     @FunctionalInterface
     interface GameMaker{
@@ -39,16 +39,16 @@ enum GameHub {
         void setOption(InputHandler input, GameOption option);
     }
 
-    int getNumber() { return number; }
-    String getName() { return name; }
-    String getExplain() { return explain; }
+    int getNumber() { return NUMBER; }
+    String getName() { return NAME; }
+    String getExplain() { return EXPLAIN; }
 
     GameProcess getGame(InputHandler input, GameOption option){
-        return creator.getGame(input,option);
+        return CREATOR.getGame(input,option);
     }
 
     void setOption(InputHandler input, GameOption option){
-        setter.setOption(input,option);
+        SETTER.setOption(input,option);
     }
 
     static GameHub getGameHub(int number){

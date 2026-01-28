@@ -17,10 +17,10 @@ class MinesweeperBoard {
     private static final char MINE_SHAPE = '*';
 
     // 랜덤
-    private final Random rd;
+    private final Random RD;
 
     // 보드판
-    private final Cell[][] board;
+    private final Cell[][] BOARD;
 
     // 폭탄의 수
     private final int BOOM_COUNT;
@@ -29,26 +29,26 @@ class MinesweeperBoard {
     private int openCellCount;
 
     MinesweeperBoard(int size, int boomCount) {
-        rd = new Random();
+        RD = new Random();
         BOARD_SIZE = size;
         BOOM_COUNT = boomCount;
         openCellCount = 0;
-        board = new Cell[BOARD_SIZE][BOARD_SIZE];
+        BOARD = new Cell[BOARD_SIZE][BOARD_SIZE];
 
         // 새로운 보드판 끼우기
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                board[i][j] = new Cell();
+                BOARD[i][j] = new Cell();
             }
         }
 
         // 폭탄 랜덤하게 설정하기
         while (boomCount > 0) {
-            int x = rd.nextInt(BOARD_SIZE);
-            int y = rd.nextInt(BOARD_SIZE);
+            int x = RD.nextInt(BOARD_SIZE);
+            int y = RD.nextInt(BOARD_SIZE);
 
-            if (!board[x][y].isMine()) {
-                board[x][y].setMine(true);
+            if (!BOARD[x][y].isMine()) {
+                BOARD[x][y].setMine(true);
                 boomCount--;
             }
         }
@@ -60,14 +60,14 @@ class MinesweeperBoard {
             throw new IllegalArgumentException("범위를 벗어났습니다.");
         }
 
-        if (board[x][y].isMine()) {
+        if (BOARD[x][y].isMine()) {
             while (true) {
-                int nx = rd.nextInt(BOARD_SIZE);
-                int ny = rd.nextInt(BOARD_SIZE);
+                int nx = RD.nextInt(BOARD_SIZE);
+                int ny = RD.nextInt(BOARD_SIZE);
 
-                if (!board[nx][ny].isMine()) {
-                    board[nx][ny].setMine(true);
-                    board[x][y].setMine(false);
+                if (!BOARD[nx][ny].isMine()) {
+                    BOARD[nx][ny].setMine(true);
+                    BOARD[x][y].setMine(false);
                     break;
                 }
             }
@@ -80,7 +80,7 @@ class MinesweeperBoard {
             throw new IllegalArgumentException("범위를 벗어났습니다.");
         }
 
-        board[x][y].flagCell();
+        BOARD[x][y].flagCell();
     }
 
 
@@ -92,20 +92,20 @@ class MinesweeperBoard {
         }
 
         // 이미 열린 칸이라면 리턴
-        if (board[x][y].isOpen()) {
+        if (BOARD[x][y].isOpen()) {
             return false;
         }
 
         // 폭탄이라면 리턴
-        if (board[x][y].isMine()) {
+        if (BOARD[x][y].isMine()) {
             return true;
         }
 
         // 열리지 않았고 폭탄이 아닌 칸인 경우
         else {
             int adjacentMines = findMines(x, y);
-            board[x][y].setAdjacentMines(adjacentMines);
-            board[x][y].openCell();
+            BOARD[x][y].setAdjacentMines(adjacentMines);
+            BOARD[x][y].openCell();
             openCellCount++;
 
             // 인접한 폭탄이 0개인 경우 주변 8칸을 연다.
@@ -133,7 +133,7 @@ class MinesweeperBoard {
             int nx = x + LX[i];
             int ny = y + LY[i];
 
-            if (!isOutOfBounds(nx, ny) && board[nx][ny].isMine()) {
+            if (!isOutOfBounds(nx, ny) && BOARD[nx][ny].isMine()) {
                 num++;
             }
         }
@@ -163,18 +163,18 @@ class MinesweeperBoard {
 
             for (int j = 0; j < BOARD_SIZE; j++) {
                 char ch;
-                if (board[i][j].isClosed()) {
+                if (BOARD[i][j].isClosed()) {
                     ch = CLOSED_SHAPE;
                 }
-                else if (board[i][j].isFlagged()) {
+                else if (BOARD[i][j].isFlagged()) {
                     ch = FLAGGED_SHAPE;
                 }
                 else {
-                    if (board[i][j].isMine()) {
+                    if (BOARD[i][j].isMine()) {
                         ch = MINE_SHAPE;
                     }
                     else {
-                        ch = OPENED_SHAPE[board[i][j].getAdjacentMines()];
+                        ch = OPENED_SHAPE[BOARD[i][j].getAdjacentMines()];
                     }
                 }
                 System.out.printf("%2c ", ch);
@@ -195,7 +195,7 @@ class MinesweeperBoard {
         {
             for(int j = 0; j < BOARD_SIZE; j++)
             {
-                board[i][j].openBoom();
+                BOARD[i][j].openBoom();
             }
         }
     }

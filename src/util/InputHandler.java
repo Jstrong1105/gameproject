@@ -8,11 +8,11 @@ import java.io.IOException;
  */
 public class InputHandler {
 
-    private final BufferedReader br;
+    private final BufferedReader BR;
 
     public InputHandler(BufferedReader br)
     {
-        this.br = br;
+        BR = br;
     }
 
     // 문자를 입력받는 메소드
@@ -21,7 +21,7 @@ public class InputHandler {
         try
         {
             System.out.print(prompt + " : ");
-            return br.readLine();
+            return BR.readLine();
         }
         catch (IOException e)
         {
@@ -59,7 +59,7 @@ public class InputHandler {
 
             else
             {
-                System.out.println(min + " ~ " + max + "사이로 입력해주세요.");
+                System.out.println(min + " ~ " + max + " 사이로 입력해주세요.");
             }
         }
     }

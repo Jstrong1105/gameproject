@@ -4,13 +4,13 @@ import util.InputHandler;
 
 public class MinesweeperOptionSetter {
 
-    private final InputHandler input;
-    private final MinesweeperOption option;
+    private final InputHandler INPUT;
+    private final MinesweeperOption OPTION;
 
     public MinesweeperOptionSetter(InputHandler input, MinesweeperOption option){
 
-        this.input = input;
-        this.option = option;
+        INPUT = input;
+        OPTION = option;
     }
 
     public void setOption()
@@ -21,20 +21,22 @@ public class MinesweeperOptionSetter {
 
         while(run) {
 
-            System.out.println("====지뢰찾기옵션====");
+            System.out.println("\n\n");
+
+            System.out.println("====지뢰 옵션====");
 
             for(MinesweeperOptionMenu menu : MinesweeperOptionMenu.values()){
                 System.out.println(menu.getNumber() + ". " + menu.getName() + " : " + menu.getExplain());
             }
             System.out.println(back + ". 뒤로가기");
 
-            int answer = input.readIntRange("번호를 선택해주세요.",1,back);
+            int answer = INPUT.readIntRange("번호를 선택해주세요.",1,back);
 
             if(answer == back){
                 run = false;
             }
             else {
-                MinesweeperOptionMenu.getMinesweeperOptionMenu(answer).setOption(input,option);
+                MinesweeperOptionMenu.getMinesweeperOptionMenu(answer).setOption(INPUT,OPTION);
             }
         }
     }

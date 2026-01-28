@@ -4,6 +4,12 @@ import domain.minesweeper.MinesweeperOption;
 
 public class GameOption {
 
-    private final MinesweeperOption minesweeperOption = new MinesweeperOption();
-    public MinesweeperOption getMinesweeperOption() { return minesweeperOption; }
+    private MinesweeperOption MINESWEEPER_OPTION;
+    public MinesweeperOption getMinesweeperOption()
+    {
+        if (MINESWEEPER_OPTION == null){
+            MINESWEEPER_OPTION = new MinesweeperOption();
+        }
+        return MINESWEEPER_OPTION;
+    }
 }

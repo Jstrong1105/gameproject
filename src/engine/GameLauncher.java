@@ -8,10 +8,10 @@ import java.io.InputStreamReader;
 
 public class GameLauncher {
 
-    private static final GameOption gameOption = new GameOption();
+    private static final GameOption GAME_OPTION = new GameOption();
     private static InputHandler input;
-    private static final int option = GameHub.values().length + 1;
-    private static final int exit = option + 1;
+    private static final int OPTION = GameHub.values().length + 1;
+    private static final int EXIT = OPTION + 1;
 
    public static void main(String[] args){
 
@@ -19,7 +19,19 @@ public class GameLauncher {
        input = new InputHandler(br);
        boolean run = true;
 
+       for(int i = 0; i < 3; i++) {
+           try {
+               System.out.println("Loading......");
+               Thread.sleep(1000);
+           }
+           catch (InterruptedException e) {
+               throw new RuntimeException(e);
+           }
+       }
+
        while(run) {
+
+           System.out.println("\n\n");
 
            System.out.println("====게임 런처====");
 
@@ -27,20 +39,20 @@ public class GameLauncher {
                System.out.println(hub.getNumber() + ". " + hub.getName() + " : " + hub.getExplain());
            }
 
-           System.out.println(option + ". 옵션");
-           System.out.println(exit + ". 종료");
+           System.out.println(OPTION + ". 옵션");
+           System.out.println(EXIT + ". 종료");
 
-           int answer = input.readIntRange("번호를 선택해주세요",1,exit);
+           int answer = input.readIntRange("번호를 선택해주세요",1,EXIT);
 
-           if(answer == exit){
+           if(answer == EXIT){
                System.out.println("프로그램을 종료합니다.");
                run = false;
            }
-           else if(answer == option){
+           else if(answer == OPTION){
                setOption();
            }
            else {
-                GameHub.getGameHub(answer).getGame(input,gameOption).run();
+                GameHub.getGameHub(answer).getGame(input,GAME_OPTION).run();
            }
        }
     }
@@ -51,22 +63,24 @@ public class GameLauncher {
 
         while(run) {
 
+            System.out.println("\n\n");
+
             System.out.println("====게임 옵션====");
 
             for (GameHub hub : GameHub.values()) {
-                System.out.println(hub.getNumber() + ". " + hub.getName() + " : " + hub.getExplain());
+                System.out.println(hub.getNumber() + ". " + hub.getName() + " 옵션");
             }
 
-            System.out.println(option + ". 뒤로가기");
+            System.out.println(OPTION + ". 뒤로가기");
 
-            int answer = input.readIntRange("번호를 선택해주세요",1,option);
+            int answer = input.readIntRange("번호를 선택해주세요",1,OPTION);
 
 
-            if(answer == option){
+            if(answer == OPTION){
                 run = false;
             }
             else {
-                GameHub.getGameHub(answer).setOption(input,gameOption);
+                GameHub.getGameHub(answer).setOption(input,GAME_OPTION);
             }
         }
     }
