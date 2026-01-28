@@ -136,7 +136,7 @@ public class MinesweeperLauncher extends GameTemplate {
         {
             System.out.println();
             try{
-                Thread.sleep(10);
+                Thread.sleep(5);
             }
             catch (InterruptedException e) {
                  throw new RuntimeException(e);

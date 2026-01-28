@@ -1,7 +1,6 @@
 package engine;
 
 import domain.base.GameOption;
-import domain.memorygame.MemoryGameLauncher;
 import util.InputHandler;
 
 import java.io.BufferedReader;
@@ -45,11 +44,7 @@ public class GameLauncher {
            System.out.println(OPTION + ". 옵션");
            System.out.println(EXIT + ". 종료");
 
-           int answer = input.readIntRange("번호를 선택해주세요",0,EXIT);
-
-           if(answer == 0){
-               new MemoryGameLauncher(input,GAME_OPTION.getMemoryGameOption()).run();
-           }
+           int answer = input.readIntRange("번호를 선택해주세요",1,EXIT);
 
            if(answer == EXIT){
                System.out.println("프로그램을 종료합니다.");
