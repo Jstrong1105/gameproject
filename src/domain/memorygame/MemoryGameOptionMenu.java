@@ -15,7 +15,6 @@ enum MemoryGameOptionMenu {
             option.setPair(pair);
             }),
     WEIGHT(3,"시간 가중치","카드를 보여주는 시간을 나타냅니다.",
-
             (input,option) -> {
             int weight = input.readIntRange("시간 가중치를 입력해주세요.",option.getMinWeight(),option.getMAX_WEIGHT());
             option.setWeight(weight);
