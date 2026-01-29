@@ -11,15 +11,18 @@ import util.InputHandler;
 enum GameHub {
 
     MINESWEEPER(1,"지뢰찾기","폭탄이 아닌 칸을 전부 여세요!",
-            (input,option) -> new MinesweeperLauncher(input,option.getMinesweeperOption()),
-            (input, option) -> new MinesweeperOptionSetter(input, option.getMinesweeperOption()).setOption()
+            (input,option)
+                    -> new MinesweeperLauncher(input,option.getMinesweeperOption()),
+            (input, option)
+                    -> new MinesweeperOptionSetter(input, option.getMinesweeperOption()).setOption()
             ),
     MEMORY_GAME(2,"메모리게임","같은 카드를 맞추세요!",
-            (input,option) -> new MemoryGameLauncher(input,option.getMemoryGameOption()),
-            (input,option) -> new MemoryGameOptionSetter(input,option.getMemoryGameOption()).setOption()
+            (input,option)
+                    -> new MemoryGameLauncher(input,option.getMemoryGameOption()),
+            (input,option)
+                    -> new MemoryGameOptionSetter(input,option.getMemoryGameOption()).setOption()
             )
     ;
-
 
     GameHub(int number, String name, String explain, GameMaker creator, OptionSetter setter){
         NUMBER = number;

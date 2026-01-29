@@ -35,7 +35,7 @@ public class MemoryGameOptionSetter {
                 run = false;
             }
             else {
-                MemoryGameOptionMenu.getMinesweeperOptionMenu(answer).setOption(INPUT,OPTION);
+                MemoryGameOptionMenu.getMemoryGameOptionMenu(answer).setOption(INPUT,OPTION);
             }
         }
     }

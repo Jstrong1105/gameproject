@@ -49,7 +49,7 @@ enum MemoryGameOptionMenu {
         System.out.println("설정이 변경되었씁니다.");
     }
 
-    static MemoryGameOptionMenu getMinesweeperOptionMenu(int number) {
+    static MemoryGameOptionMenu getMemoryGameOptionMenu(int number) {
 
         for(MemoryGameOptionMenu menu : MemoryGameOptionMenu.values()){
 
