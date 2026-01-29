@@ -27,4 +27,6 @@ class PokerRankingResult {
     String getRankingName(){
         return ranking.getName();
     }
+
+
 }

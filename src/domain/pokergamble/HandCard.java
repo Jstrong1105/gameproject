@@ -1,6 +1,7 @@
 package domain.pokergamble;
 
 import domain.TrumpCard.Card;
+import domain.TrumpCard.CardPrinter;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 class HandCard {
 
     private final List<Card> handCard;
+    private final CardPrinter printer = new CardPrinter();
 
     HandCard(){
         handCard = new ArrayList<>();
@@ -29,5 +31,11 @@ class HandCard {
     // 카드 공개하기
     void openCard(int index){
         handCard.get(index).openCard();
+    }
+    
+    // 카드 출력하기
+    void printCard(){
+
+        printer.printCard(handCard);
     }
 }

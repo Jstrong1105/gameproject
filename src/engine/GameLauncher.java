@@ -1,6 +1,7 @@
 package engine;
 
 import domain.base.GameOption;
+import domain.memorygame.MemoryGameLauncher;
 import util.GameSleeper;
 import util.InputHandler;
 
@@ -16,15 +17,12 @@ public class GameLauncher {
 
    public static void main(String[] args){
 
-       GameSleeper sleeper = new GameSleeper();
        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
        input = new InputHandler(br);
        boolean run = true;
-
-       System.out.println("로딩 중입니다.");
+       GameSleeper sleeper = new GameSleeper();
+       System.out.println("로딩중입니다.");
        sleeper.sleepGame(3);
-       System.out.println("로딩 완료.");
-
        while(run) {
 
            input.clearBuffer();
@@ -40,7 +38,11 @@ public class GameLauncher {
            System.out.println(OPTION + ". 옵션");
            System.out.println(EXIT + ". 종료");
 
-           int answer = input.readIntRange("번호를 선택해주세요",1,EXIT);
+           int answer = input.readIntRange("번호를 선택해주세요",0,EXIT);
+
+           if(answer == 0){
+               new MemoryGameLauncher(input,GAME_OPTION.getMemoryGameOption()).run();
+           }
 
            if(answer == EXIT){
                System.out.println("프로그램을 종료합니다.");
@@ -72,6 +74,7 @@ public class GameLauncher {
             System.out.println(OPTION + ". 뒤로가기");
 
             int answer = input.readIntRange("번호를 선택해주세요",1,OPTION);
+
 
             if(answer == OPTION){
                 run = false;
