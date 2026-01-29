@@ -13,10 +13,10 @@ public class MinesweeperOption {
     int getMinSize() { return MIN_SIZE; }
     int getMaxSize() { return MAX_SIZE; }
 
-    public void setSize(int size)
+    void setSize(int size)
     {
         if(size < MIN_SIZE || size > MAX_SIZE){
-            throw new IllegalArgumentException("허용하지 않는 값입니다.");
+            throw new IllegalArgumentException("허용하지 않는 사이즈입니다.");
         }
         this.size = size;
     }
@@ -29,10 +29,10 @@ public class MinesweeperOption {
     int getMinWeight() { return MIN_WEIGHT; }
     int getMaxWeight() { return MAX_WEIGHT; }
 
-    public void setWeight(int weight)
+    void setWeight(int weight)
     {
         if(weight < MIN_WEIGHT || weight > MAX_WEIGHT){
-            throw new IllegalArgumentException("허용하지 않는 값입니다.");
+            throw new IllegalArgumentException("허용하지 않는 가중치입니다.");
         }
         this.weight = weight;
     }

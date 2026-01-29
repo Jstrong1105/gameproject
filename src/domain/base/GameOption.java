@@ -1,5 +1,6 @@
 package domain.base;
 
+import domain.memorygame.MemoryGameOption;
 import domain.minesweeper.MinesweeperOption;
 
 public class GameOption {
@@ -13,7 +14,7 @@ public class GameOption {
         return minesweeperOption;
     }
 
-    /*
+
     private MemoryGameOption memoryGameOption;
     public MemoryGameOption getMemoryGameOption()
     {
@@ -22,5 +23,5 @@ public class GameOption {
         }
         return memoryGameOption;
     }
-    */
+
 }

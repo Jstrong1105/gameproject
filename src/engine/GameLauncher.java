@@ -1,6 +1,7 @@
 package engine;
 
 import domain.base.GameOption;
+import util.GameSleeper;
 import util.InputHandler;
 
 import java.io.BufferedReader;
@@ -15,19 +16,14 @@ public class GameLauncher {
 
    public static void main(String[] args){
 
+       GameSleeper sleeper = new GameSleeper();
        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
        input = new InputHandler(br);
        boolean run = true;
 
-       for(int i = 0; i < 3; i++) {
-           try {
-               System.out.println("Loading......");
-               Thread.sleep(1000);
-           }
-           catch (InterruptedException e) {
-               throw new RuntimeException(e);
-           }
-       }
+       System.out.println("로딩 중입니다.");
+       sleeper.sleepGame(3);
+       System.out.println("로딩 완료.");
 
        while(run) {
 
@@ -76,7 +72,6 @@ public class GameLauncher {
             System.out.println(OPTION + ". 뒤로가기");
 
             int answer = input.readIntRange("번호를 선택해주세요",1,OPTION);
-
 
             if(answer == OPTION){
                 run = false;
