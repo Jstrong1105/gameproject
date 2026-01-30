@@ -1,7 +1,6 @@
 package domain.pokergamble;
 
 import domain.base.GameOptionTemplate;
-import util.InputHandler;
 
 public enum PokerGambleOptionMenu implements GameOptionTemplate<PokerGambleOption> {
 

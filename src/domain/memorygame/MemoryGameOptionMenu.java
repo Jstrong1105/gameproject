@@ -1,7 +1,6 @@
 package domain.memorygame;
 
 import domain.base.GameOptionTemplate;
-import util.InputHandler;
 
 public enum MemoryGameOptionMenu implements GameOptionTemplate<MemoryGameOption> {
 
