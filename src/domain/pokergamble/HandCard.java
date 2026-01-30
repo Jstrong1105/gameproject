@@ -13,6 +13,7 @@ class HandCard {
 
     private final List<Card> handCard;
     private final CardPrinter printer = new CardPrinter();
+    private final HandEvaluator evaluator = new HandEvaluator();
 
     HandCard(){
         handCard = new ArrayList<>();

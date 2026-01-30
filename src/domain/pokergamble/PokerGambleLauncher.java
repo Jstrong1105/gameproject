@@ -56,6 +56,7 @@ class PokerGambleLauncher extends GameTemplate {
         roundInitialize();
     }
 
+    // 라운드 초기화
     private void roundInitialize(){
 
         totalBetCoin = 0;
