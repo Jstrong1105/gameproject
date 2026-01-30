@@ -39,4 +39,13 @@ class HandCard {
 
         printer.printCard(handCard);
     }
+
+    PokerRankingResult evaluateRanking(){
+
+        if(handCard.size() < 5){
+            throw new IllegalStateException("5장 이하는 판독이 불가능합니다.");
+        }
+
+        return evaluator.getResult(handCard);
+    }
 }

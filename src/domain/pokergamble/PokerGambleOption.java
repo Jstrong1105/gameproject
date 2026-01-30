@@ -1,8 +1,8 @@
 package domain.pokergamble;
 
-class PokerGambleOption {
+public class PokerGambleOption {
 
-    private boolean fiveSeven = false;
+    private boolean fiveSeven = true;
 
     void setFiveSeven(boolean fiveSeven){
         this.fiveSeven = fiveSeven;

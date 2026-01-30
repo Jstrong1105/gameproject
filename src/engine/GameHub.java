@@ -1,11 +1,14 @@
 package engine;
 
 import domain.base.GameOption;
+import domain.base.GameOptionSetter;
 import domain.base.GameProcess;
 import domain.memorygame.MemoryGameLauncher;
-import domain.memorygame.MemoryGameOptionSetter;
+import domain.memorygame.MemoryGameOptionMenu;
 import domain.minesweeper.MinesweeperLauncher;
-import domain.minesweeper.MinesweeperOptionSetter;
+import domain.minesweeper.MinesweeperOptionMenu;
+import domain.pokergamble.PokerGambleLauncher;
+import domain.pokergamble.PokerGambleOptionMenu;
 import util.InputHandler;
 
 enum GameHub {
@@ -14,13 +17,19 @@ enum GameHub {
             (input,option)
                     -> new MinesweeperLauncher(input,option.getMinesweeperOption()),
             (input, option)
-                    -> new MinesweeperOptionSetter(input, option.getMinesweeperOption()).setOption()
+                    -> new GameOptionSetter<>(input, option.getMinesweeperOption(), MinesweeperOptionMenu.values()).setOption()
             ),
     MEMORY_GAME(2,"메모리게임","같은 카드를 맞추세요!",
             (input,option)
                     -> new MemoryGameLauncher(input,option.getMemoryGameOption()),
             (input,option)
-                    -> new MemoryGameOptionSetter(input,option.getMemoryGameOption()).setOption()
+                    -> new GameOptionSetter<>(input,option.getMemoryGameOption(),MemoryGameOptionMenu.values()).setOption()
+            ),
+    POKER_GAMBLE(3,"포커겜블","포커 게임에서 승리해 목표 코인을 달성하세요!",
+            (input,option)
+                    -> new PokerGambleLauncher(input,option.getPokerGambleOption()),
+            (input,option)
+                    -> new GameOptionSetter<>(input,option.getPokerGambleOption(),PokerGambleOptionMenu.values()).setOption()
             )
     ;
 

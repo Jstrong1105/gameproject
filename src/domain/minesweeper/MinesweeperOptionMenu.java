@@ -1,8 +1,9 @@
 package domain.minesweeper;
 
+import domain.base.GameOptionTemplate;
 import util.InputHandler;
 
-enum MinesweeperOptionMenu {
+public enum MinesweeperOptionMenu implements GameOptionTemplate<MinesweeperOption> {
 
     SIZE(1,"사이즈","지뢰찾기의 가로, 세로 길이를 결정합니다.",
         (input,option) ->
@@ -18,7 +19,7 @@ enum MinesweeperOptionMenu {
             })
     ;
 
-    MinesweeperOptionMenu(int number,String name,String explain, OptionSetter setter)
+    MinesweeperOptionMenu(int number,String name,String explain, OptionSetter<MinesweeperOption> setter)
     {
         NUMBER = number;
         NAME = name;
@@ -29,32 +30,17 @@ enum MinesweeperOptionMenu {
     private final int NUMBER;
     private final String NAME;
     private final String EXPLAIN;
-    private final OptionSetter SETTER;
+    private final OptionSetter<MinesweeperOption> SETTER;
 
-    @FunctionalInterface
-    interface OptionSetter{
-        void setOption(InputHandler input, MinesweeperOption option);
-    }
+    @Override
+    public int getNumber() { return NUMBER; }
+    @Override
+    public String getName() { return NAME; }
+    @Override
+    public String getExplain() { return EXPLAIN; }
 
-    int getNumber() { return NUMBER; }
-    String getName() { return NAME; }
-    String getExplain() { return EXPLAIN; }
-
-    void setOption(InputHandler input, MinesweeperOption option)
-    {
-        SETTER.setOption(input,option);
-        System.out.println("설정이 변경되었습니다.");
-    }
-
-    static MinesweeperOptionMenu getMinesweeperOptionMenu(int number) {
-
-        for(MinesweeperOptionMenu menu : MinesweeperOptionMenu.values()){
-
-            if(menu.getNumber() == number){
-                return menu;
-            }
-        }
-
-        throw new IllegalArgumentException("존재하지않는 옵션번호입니다.");
+    @Override
+    public OptionSetter<MinesweeperOption> getSetter(){
+        return SETTER;
     }
 }

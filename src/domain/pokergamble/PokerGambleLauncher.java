@@ -6,9 +6,9 @@ import domain.base.GameResultType;
 import domain.base.GameTemplate;
 import util.InputHandler;
 
-class PokerGambleLauncher extends GameTemplate {
+public class PokerGambleLauncher extends GameTemplate {
 
-    PokerGambleLauncher(InputHandler input, PokerGambleOption option){
+    public PokerGambleLauncher(InputHandler input, PokerGambleOption option){
         super(input);
         five = option.getFS();
         weight = option.getWeight();
@@ -32,6 +32,9 @@ class PokerGambleLauncher extends GameTemplate {
 
     private int[] openList;
 
+    private PokerRankingResult playerResult;
+    private PokerRankingResult cpuResult;
+
     @Override
     protected void initialize() {
 
@@ -39,11 +42,11 @@ class PokerGambleLauncher extends GameTemplate {
 
         if(five){
             cardCount = 5;
-            openList = new int[]{ 0,3,4 };
+            openList = new int[]{ 1,2 };
         }
         else{
             cardCount = 7;
-            openList = new int[]{ 0,4,5,6 };
+            openList = new int[]{ 1,2,3 };
         }
 
         int minLevel = 1;
@@ -105,6 +108,8 @@ class PokerGambleLauncher extends GameTemplate {
 
         input.clearBuffer();
         currentBetCoin = input.readIntRange("베팅할 코인을 입력해주세요.",0,playerCoin);
+        playerCoin -= currentBetCoin;
+        totalBetCoin += currentBetCoin;
     }
 
     @Override
@@ -116,7 +121,20 @@ class PokerGambleLauncher extends GameTemplate {
 
         else {
             if(playerCard.countCard() >= cardCount){
-                // 결과 확인
+                playerResult = playerCard.evaluateRanking();
+                cpuResult = cpuCard.evaluateRanking();
+
+                int result = playerResult.compareTo(cpuResult);
+
+                if(result > 0){
+                    finish(new GameResult(GameResultType.WIN));
+                }
+                else if(result < 0){
+                    finish(new GameResult(GameResultType.LOSE));
+                }
+                else {
+                    finish(new GameResult(GameResultType.DRAW));
+                }
             }
             else {
                 drawCard();
@@ -126,6 +144,16 @@ class PokerGambleLauncher extends GameTemplate {
 
     @Override
     protected void finish(GameResult result) {
+
+        for(int i = 0; i < cpuCard.countCard(); i++) {
+            cpuCard.openCard(i);
+        }
+
+        cpuCard.printCard();
+        System.out.println(cpuResult.getRankingName());
+
+        playerCard.printCard();
+        System.out.println(playerResult.getRankingName());
 
         if(result.isWin()){
             System.out.println("승리했습니다.");
@@ -150,6 +178,10 @@ class PokerGambleLauncher extends GameTemplate {
             System.out.println("모든 코인을 소진했습니다.");
             setPlaying(false);
         }
+
+        input.readString("엔터를 눌러 계속");
+
+        roundInitialize();
     }
 
     // 카드 나눠주는 메소드

@@ -2,6 +2,7 @@ package domain.base;
 
 import domain.memorygame.MemoryGameOption;
 import domain.minesweeper.MinesweeperOption;
+import domain.pokergamble.PokerGambleOption;
 
 public class GameOption {
 
@@ -24,4 +25,12 @@ public class GameOption {
         return memoryGameOption;
     }
 
+    private PokerGambleOption pokerGambleOption;
+    public PokerGambleOption getPokerGambleOption()
+    {
+        if(pokerGambleOption == null){
+            pokerGambleOption = new PokerGambleOption();
+        }
+        return pokerGambleOption;
+    }
 }

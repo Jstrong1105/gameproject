@@ -9,18 +9,12 @@ import java.util.*;
  */
 class HandEvaluator {
 
-    // 돌려줄 객체
-    private PokerRankingResult result;
-
     // 받은 카드 뭉치
     private List<Card> handCard;
 
     // 숫자 카운트
-    // 여기에는 2 : 1 , 4 : 2 , 7 : 3 .... A : 1 이런식이다.
+    // 여기에는 2 : 1 , 4 : 2 , 7 : 3 .... 14 : 1 이런식이다.
     private HashMap<Integer,Integer> numberCount;
-    // 모양 카운트
-    // 여기는 S : 3 , H : 2 , D : 1 , C : 1 이런식이다.
-    private HashMap<Character,Integer> shapeCount;
 
     // 페어 카운트
     // 여기는 1 : 3 , 2 : 2 ... 4 : 1 이런식이다.
@@ -53,7 +47,7 @@ class HandEvaluator {
     PokerRankingResult getResult(List<Card> handCard){
 
         this.handCard = handCard;
-
+        PokerRankingResult result;
         ready();
 
         for(Evaluator evaluator : evaluators){
@@ -121,23 +115,32 @@ class HandEvaluator {
             // 가장 높은 카드가 14인 경우
             if(num == 14){
                 result = new PokerRankingResult(PokerRankingList.LOYAL_FLUSH);
-                return result;
             }
             // 가장 높은 카드가 14가 아닌 경우
             else{
                 result = new PokerRankingResult(PokerRankingList.STRAIGHT_FLUSH);
-                result.addKicker(num);
-                return result;
             }
+            result.addKicker(num);
+            return result;
         }
     }
 
     private PokerRankingResult fourOfAKind(){
         if(groupCounts.containsKey(4)){
+            PokerRankingResult result = new PokerRankingResult(PokerRankingList.FOUR_OF_A_KIND);
 
-        }
-        else {
-            return null;
+            for(int i : numberList){
+                if(numberCount.get(i) >= 4){
+                    result.addKicker(i);
+
+                    for(int j : numberList){
+                        if(j != i){
+                            result.addKicker(j);
+                            return result;
+                        }
+                    }
+                }
+            }
         }
 
         return null;
@@ -145,39 +148,201 @@ class HandEvaluator {
 
     private PokerRankingResult fullHouse(){
 
+        int triple = groupCounts.getOrDefault(3,0);
+        int pair = groupCounts.getOrDefault(2,0);
 
+        if(triple >=2 || (triple == 1 && pair >= 1)){
+            PokerRankingResult result = new PokerRankingResult(PokerRankingList.FULL_HOUSE);
+
+            for(int i : numberList){
+                if(numberCount.get(i) >= 3){
+                    result.addKicker(i);
+
+                    for(int j : numberList){
+                        if(j != i && numberCount.get(j) >= 2){
+                            result.addKicker(j);
+                            return result;
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
 
         return null;
     }
 
     private PokerRankingResult flush(){
-       return null;
-    }
 
-    private PokerRankingResult straight(){
+        if(!flush){
+            return null;
+        }
+
+        PokerRankingResult result = new PokerRankingResult(PokerRankingList.FLUSH);
+
+        int n = 0;
+
+        for(int i : flushNumberList){
+
+            result.addKicker(i);
+            n++;
+
+            if(n >= 5){
+                return result;
+            }
+        }
+
         return null;
     }
 
+    private PokerRankingResult straight(){
+
+        int num = isStraight(numberList);
+
+        if(num == -1){
+            return null;
+        }
+
+        else{
+            PokerRankingResult result;
+
+            if(num == 14){
+                result = new PokerRankingResult(PokerRankingList.MOUNTAIN);
+            }
+            else if(num == 5){
+                result = new PokerRankingResult(PokerRankingList.BACK_STRAIGHT);
+            }
+            else{
+                result = new PokerRankingResult(PokerRankingList.STRAIGHT);
+            }
+            result.addKicker(num);
+            return result;
+        }
+    }
+
     private PokerRankingResult triple(){
+
+        if(groupCounts.containsKey(3)){
+
+            PokerRankingResult result = new PokerRankingResult(PokerRankingList.TRIPLE);
+
+            for(int i : numberList){
+                if(numberCount.get(i) >= 3){
+                    result.addKicker(i);
+
+                    int n = 0;
+
+                    for(int j : numberList){
+
+                        if(j != i){
+                            result.addKicker(j);
+                            n++;
+                        }
+
+                        if(n >= 2){
+                            return result;
+                        }
+                    }
+                }
+            }
+        }
+
         return null;
     }
 
     private PokerRankingResult twoPair(){
+
+        int pair = groupCounts.getOrDefault(2,0);
+
+        if(pair >= 2){
+            PokerRankingResult result = new PokerRankingResult(PokerRankingList.TWO_PAIR);
+
+            int highPair = 0;
+            int lowPair = 0;
+            int kicker = 0;
+
+            for(int i : numberList){
+                if(numberCount.get(i) >= 2){
+                    highPair = i;
+                    break;
+                }
+            }
+
+            for(int i : numberList){
+                if(i != highPair && numberCount.get(i) >= 2){
+                    lowPair = i;
+                    break;
+                }
+            }
+
+            for(int i : numberList){
+                if(i != highPair && i != lowPair){
+                    kicker = i;
+                    break;
+                }
+            }
+
+            result.addKicker(highPair);
+            result.addKicker(lowPair);
+            result.addKicker(kicker);
+            return result;
+        }
+
         return null;
     }
 
     private PokerRankingResult onePair(){
+
+        int pair = groupCounts.getOrDefault(2,0);
+
+        if(pair >= 1){
+
+            PokerRankingResult result = new PokerRankingResult(PokerRankingList.ONE_PAIR);
+
+            int kicPair = 0;
+
+            for(int i : numberList){
+                if(numberCount.get(i) >= 2){
+                    kicPair = i;
+                    break;
+                }
+            }
+
+            int n = 0;
+
+            result.addKicker(kicPair);
+
+            for(int i : numberList){
+                if(i != kicPair){
+                    result.addKicker(i);
+                    n++;
+                }
+                if(n >= 3){
+                    break;
+                }
+            }
+            return result;
+        }
+
         return null;
     }
 
     private PokerRankingResult highCard(){
-        return null;
+        PokerRankingResult result = new PokerRankingResult(PokerRankingList.HIGH_CARD);
+
+        for(int i = 0; i < 5; i++){
+            result.addKicker(numberList.get(i));
+        }
+
+        return result;
     }
 
     // 내부에서 결과를 계산하기 위해 준비하는 메소드
     private void ready(){
+        flush = false;
         numberCount = new HashMap<>();
-        shapeCount = new HashMap<>();
+        HashMap<Character, Integer> shapeCount = new HashMap<>();
         numberList = new ArrayList<>();
         groupCounts = new HashMap<>();
 
