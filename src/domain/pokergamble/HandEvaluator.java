@@ -139,6 +139,8 @@ class HandEvaluator {
         else {
             return null;
         }
+
+        return null;
     }
 
     private PokerRankingResult fullHouse(){
