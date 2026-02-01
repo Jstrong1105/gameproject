@@ -4,13 +4,11 @@ import util.InputHandler;
 
 public class GameOptionSetter<T , E extends Enum<E> & GameOptionTemplate<T> > {
 
-    private final InputHandler INPUT;
     private final T OPTION;
     private final E[] LIST;
 
-    public GameOptionSetter(InputHandler input, T option, E[] list){
+    public GameOptionSetter(T option, E[] list){
 
-        INPUT = input;
         OPTION = option;
         LIST = list;
     }
@@ -32,7 +30,7 @@ public class GameOptionSetter<T , E extends Enum<E> & GameOptionTemplate<T> > {
             }
             System.out.println(back + ". 뒤로가기");
 
-            int answer = INPUT.readIntRange("번호를 선택해주세요.",1,back);
+            int answer = InputHandler.readIntRange("번호를 선택해주세요.",1,back);
 
             if(answer == back){
                 run = false;
@@ -40,7 +38,7 @@ public class GameOptionSetter<T , E extends Enum<E> & GameOptionTemplate<T> > {
             else {
                 for(E menu : LIST){
                     if(menu.getNumber() == answer){
-                        menu.setOption(INPUT,OPTION);
+                        menu.setOption(OPTION);
                     }
                 }
             }

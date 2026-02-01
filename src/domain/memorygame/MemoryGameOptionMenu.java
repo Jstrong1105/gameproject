@@ -1,22 +1,23 @@
 package domain.memorygame;
 
 import domain.base.GameOptionTemplate;
+import util.InputHandler;
 
 public enum MemoryGameOptionMenu implements GameOptionTemplate<MemoryGameOption> {
 
     SIZE(1, "카드의 개수", "맞춰야하는 카드의 개수를 나타냅니다.",
-            (input, option) -> {
-                int size = input.readIntRange("카드의 개수를 입력해주세요", option.getMinSize(), option.getMaxSize());
+            (option) -> {
+                int size = InputHandler.readIntRange("카드의 개수를 입력해주세요", option.getMinSize(), option.getMaxSize());
                 option.setSize(size);
             }),
     PAIR(2, "카드의 페어 수", "맞춰야하는 카드의 페어의 수를 나타냅니다.",
-            (input, option) -> {
-                int pair = input.readIntRange("카드의 페어를 입력해주세요.", option.getMinPair(), option.getMaxPair());
+            (option) -> {
+                int pair = InputHandler.readIntRange("카드의 페어를 입력해주세요.", option.getMinPair(), option.getMaxPair());
                 option.setPair(pair);
             }),
     WEIGHT(3, "시간 가중치", "카드를 보여주는 시간을 나타냅니다.",
-            (input, option) -> {
-                int weight = input.readIntRange("시간 가중치를 입력해주세요.", option.getMinWeight(), option.getMAX_WEIGHT());
+            ( option) -> {
+                int weight = InputHandler.readIntRange("시간 가중치를 입력해주세요.", option.getMinWeight(), option.getMax_Weight());
                 option.setWeight(weight);
             });
 

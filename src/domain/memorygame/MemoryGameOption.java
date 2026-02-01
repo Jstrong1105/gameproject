@@ -41,7 +41,7 @@ public class MemoryGameOption {
     private int weight = MIN_WEIGHT;
 
     int getMinWeight() { return MIN_WEIGHT; }
-    int getMAX_WEIGHT() { return MAX_WEIGHT; }
+    int getMax_Weight() { return MAX_WEIGHT; }
     int getWeight() { return weight; }
     void setWeight(int weight){
 

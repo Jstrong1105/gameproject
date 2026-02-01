@@ -5,7 +5,7 @@ package util;
  */
 public class GameSleeper {
 
-    public void sleepGame(int second){
+    public static void sleepGame(int second){
 
         try{
 

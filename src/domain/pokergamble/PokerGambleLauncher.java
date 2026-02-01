@@ -8,8 +8,7 @@ import util.InputHandler;
 
 public class PokerGambleLauncher extends GameTemplate {
 
-    public PokerGambleLauncher(InputHandler input, PokerGambleOption option){
-        super(input);
+    public PokerGambleLauncher(PokerGambleOption option){
         five = option.getFS();
         weight = option.getWeight();
         targetCoin = option.getTargetCoin();
@@ -52,8 +51,8 @@ public class PokerGambleLauncher extends GameTemplate {
         int minLevel = 1;
         int maxLevel = 3;
 
-        input.clearBuffer();
-        int level = input.readIntRange("난이도를 입력해주세요.",minLevel,maxLevel);
+        InputHandler.clearBuffer();
+        int level = InputHandler.readIntRange("난이도를 입력해주세요.",minLevel,maxLevel);
         playerCoin = targetCoin / LEVEL_LIST[level-1];
 
         roundInitialize();
@@ -106,8 +105,8 @@ public class PokerGambleLauncher extends GameTemplate {
     @Override
     protected void handleInput() {
 
-        input.clearBuffer();
-        currentBetCoin = input.readIntRange("베팅할 코인을 입력해주세요.",0,playerCoin);
+        InputHandler.clearBuffer();
+        currentBetCoin = InputHandler.readIntRange("베팅할 코인을 입력해주세요.",0,playerCoin);
         playerCoin -= currentBetCoin;
         totalBetCoin += currentBetCoin;
     }
@@ -179,7 +178,7 @@ public class PokerGambleLauncher extends GameTemplate {
             setPlaying(false);
         }
 
-        input.readString("엔터를 눌러 계속");
+        InputHandler.readString("엔터를 눌러 계속");
 
         roundInitialize();
     }

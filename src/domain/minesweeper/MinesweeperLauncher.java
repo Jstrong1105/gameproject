@@ -22,9 +22,8 @@ public class MinesweeperLauncher extends GameTemplate {
     private int openFlag;
     private boolean first;
 
-    public MinesweeperLauncher(InputHandler input, MinesweeperOption option)
+    public MinesweeperLauncher(MinesweeperOption option)
     {
-        super(input);
         BOARD_SIZE = option.getSize();
         WEIGHT = option.getWeight();
     }
@@ -32,11 +31,11 @@ public class MinesweeperLauncher extends GameTemplate {
     @Override
     protected void initialize() {
 
-        input.clearBuffer();
+        InputHandler.clearBuffer();
 
         System.out.println("지뢰찾기 게임입니다.");
 
-        int level = input.readIntRange("난이도를 입력해주세요.",MIN_LEVEL,MAX_LEVEL);
+        int level = InputHandler.readIntRange("난이도를 입력해주세요.",MIN_LEVEL,MAX_LEVEL);
 
         int boomCount = BOARD_SIZE * BOARD_SIZE / LEVEL_LIST[level-1] * WEIGHT;
 
@@ -74,15 +73,15 @@ public class MinesweeperLauncher extends GameTemplate {
     @Override
     protected void handleInput() {
 
-        input.clearBuffer();
+        InputHandler.clearBuffer();
 
         playerRow = 0;
         playerCol = 0;
         openFlag = 0;
 
-        playerRow = input.readIntRange("열 번호 입력",1,BOARD_SIZE);
-        playerCol = input.readIntRange("행 번호 입력",1,BOARD_SIZE);
-        openFlag = input.readIntRange("오픈("+ OPEN_NUMBER +")/깃발("+ FLAG_NUMBER +")",OPEN_NUMBER,FLAG_NUMBER);
+        playerRow = InputHandler.readIntRange("열 번호 입력",1,BOARD_SIZE);
+        playerCol = InputHandler.readIntRange("행 번호 입력",1,BOARD_SIZE);
+        openFlag = InputHandler.readIntRange("오픈("+ OPEN_NUMBER +")/깃발("+ FLAG_NUMBER +")",OPEN_NUMBER,FLAG_NUMBER);
 
         playerRow--;
         playerCol--;

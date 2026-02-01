@@ -1,5 +1,6 @@
 package domain.base;
 
+import jdk.internal.util.xml.impl.Input;
 import util.InputHandler;
 
 /**
@@ -7,15 +8,6 @@ import util.InputHandler;
  * 템플릿 메소드 패턴.
  */
 public abstract class GameTemplate implements GameProcess{
-
-    // 생성자
-    protected GameTemplate(InputHandler input)
-    {
-        this.input = input;
-    }
-
-    // 입력받는 도구
-    protected InputHandler input;
 
     // 실행 중 여부
     protected boolean playing = false;
@@ -44,13 +36,14 @@ public abstract class GameTemplate implements GameProcess{
     {
         while(true)
         {
-            String answer = input.readString("다시 시작하시겠습니까 ? (Y/N)");
+            String answer = InputHandler.readString("다시 시작하시겠습니까 ? (Y/N)");
             if(answer.equalsIgnoreCase("Y"))
             {
                 return true;
             }
             else if(answer.equalsIgnoreCase("N"))
             {
+                InputHandler.readString("게임을 종료합니다.");
                 return false;
             }
             else

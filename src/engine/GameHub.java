@@ -11,25 +11,25 @@ import domain.pokergamble.PokerGambleLauncher;
 import domain.pokergamble.PokerGambleOptionMenu;
 import util.InputHandler;
 
-enum GameHub {
+public enum GameHub {
 
     MINESWEEPER(1,"지뢰찾기","폭탄이 아닌 칸을 전부 여세요!",
-            (input,option)
-                    -> new MinesweeperLauncher(input,option.getMinesweeperOption()),
-            (input, option)
-                    -> new GameOptionSetter<>(input, option.getMinesweeperOption(), MinesweeperOptionMenu.values()).setOption()
+            (option)
+                    -> new MinesweeperLauncher(option.getMinesweeperOption()),
+            (option)
+                    -> new GameOptionSetter<>(option.getMinesweeperOption(), MinesweeperOptionMenu.values()).setOption()
             ),
     MEMORY_GAME(2,"메모리게임","같은 카드를 맞추세요!",
-            (input,option)
-                    -> new MemoryGameLauncher(input,option.getMemoryGameOption()),
-            (input,option)
-                    -> new GameOptionSetter<>(input,option.getMemoryGameOption(),MemoryGameOptionMenu.values()).setOption()
+            (option)
+                    -> new MemoryGameLauncher(option.getMemoryGameOption()),
+            (option)
+                    -> new GameOptionSetter<>(option.getMemoryGameOption(),MemoryGameOptionMenu.values()).setOption()
             ),
     POKER_GAMBLE(3,"포커겜블","포커 게임에서 승리해 목표 코인을 달성하세요!",
-            (input,option)
-                    -> new PokerGambleLauncher(input,option.getPokerGambleOption()),
-            (input,option)
-                    -> new GameOptionSetter<>(input,option.getPokerGambleOption(),PokerGambleOptionMenu.values()).setOption()
+            (option)
+                    -> new PokerGambleLauncher(option.getPokerGambleOption()),
+            (option)
+                    -> new GameOptionSetter<>(option.getPokerGambleOption(),PokerGambleOptionMenu.values()).setOption()
             )
     ;
 
@@ -49,24 +49,24 @@ enum GameHub {
 
     @FunctionalInterface
     interface GameMaker{
-        GameProcess getGame(InputHandler input, GameOption option);
+        GameProcess getGame(GameOption option);
     }
 
     @FunctionalInterface
     interface OptionSetter{
-        void setOption(InputHandler input, GameOption option);
+        void setOption(GameOption option);
     }
 
     int getNumber() { return NUMBER; }
     String getName() { return NAME; }
     String getExplain() { return EXPLAIN; }
 
-    GameProcess getGame(InputHandler input, GameOption option){
-        return CREATOR.getGame(input,option);
+    GameProcess getGame(GameOption option){
+        return CREATOR.getGame(option);
     }
 
-    void setOption(InputHandler input, GameOption option){
-        SETTER.setOption(input,option);
+    void setOption(GameOption option){
+        SETTER.setOption(option);
     }
 
     static GameHub getGameHub(int number){

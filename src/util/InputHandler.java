@@ -2,26 +2,22 @@ package util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * 사용자에게 입력을 받아 처리하는 도구
  */
 public class InputHandler {
 
-    private final BufferedReader BR;
-
-    public InputHandler(BufferedReader br)
-    {
-        BR = br;
-    }
+    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     // 문자를 입력받는 메소드
-    public String readString(String prompt)
+    public static String readString(String prompt)
     {
         try
         {
             System.out.print(prompt + " : ");
-            return BR.readLine();
+            return br.readLine();
         }
         catch (IOException e)
         {
@@ -30,7 +26,7 @@ public class InputHandler {
     }
 
     // 숫자만 입력받는 메소드
-    public int readInt(String prompt)
+    public static int readInt(String prompt)
     {
         while(true)
         {
@@ -46,7 +42,7 @@ public class InputHandler {
     }
 
     // 숫자를 제한 범위 내에서 입력받는 메소드
-    public int readIntRange(String prompt, int min, int max)
+    public static int readIntRange(String prompt, int min, int max)
     {
         while(true)
         {
@@ -66,12 +62,12 @@ public class InputHandler {
 
     // 버퍼를 비우는 메소드
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void clearBuffer()
+    public static void clearBuffer()
     {
         try
         {
-            while(BR.ready()){
-                BR.read();
+            while(br.ready()){
+                br.read();
             }
         }
         catch (IOException e) {

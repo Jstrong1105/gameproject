@@ -16,12 +16,10 @@ import java.util.List;
  */
 public class MemoryGameLauncher extends GameTemplate {
 
-    public MemoryGameLauncher(InputHandler input, MemoryGameOption option){
-        super(input);
+    public MemoryGameLauncher(MemoryGameOption option){
         SIZE = option.getSize();
         PAIR = option.getPair();
         WEIGHT = option.getWeight();
-        sleeper = new GameSleeper();
         printer = new CardPrinter();
     }
 
@@ -29,7 +27,6 @@ public class MemoryGameLauncher extends GameTemplate {
     private final int PAIR;
     private final int WEIGHT;
 
-    private final GameSleeper sleeper;
     private final CardPrinter printer;
 
     private MemoryBoard board;
@@ -50,12 +47,12 @@ public class MemoryGameLauncher extends GameTemplate {
             board.drawCard(i).openCard();
         }
 
-        input.readString("준비하세요! 엔터를 누르면 카드가 보여집니다.");
+        InputHandler.readString("준비하세요! 엔터를 누르면 카드가 보여집니다.");
         
         printCard();
 
         // 10초 * WEIGHT 초
-        sleeper.sleepGame(10 * WEIGHT);
+        GameSleeper.sleepGame(10 * WEIGHT);
 
         for(int i = 0; i < SIZE*PAIR; i++){
             board.drawCard(i).hiddenCard();
@@ -72,13 +69,13 @@ public class MemoryGameLauncher extends GameTemplate {
     @Override
     protected void handleInput() {
 
-        input.clearBuffer();
+        InputHandler.clearBuffer();
 
         playerCard.clear();
 
         while(playerCard.size() < PAIR){
 
-            int player = input.readIntRange("카드를 선택해주세요.",1,SIZE*PAIR);
+            int player = InputHandler.readIntRange("카드를 선택해주세요.",1,SIZE*PAIR);
 
             player--;
 
@@ -106,7 +103,7 @@ public class MemoryGameLauncher extends GameTemplate {
                 for(Card card : playerCard){
                     card.hiddenCard();
                 }
-                sleeper.sleepGame(3 * WEIGHT);
+                GameSleeper.sleepGame(3 * WEIGHT);
 
                 return;
             }
@@ -115,7 +112,7 @@ public class MemoryGameLauncher extends GameTemplate {
         // 모두 같은 카드라면
         System.out.println("같은 카드입니다.");
 
-        sleeper.sleepGame(1);
+        GameSleeper.sleepGame(1);
 
         matchCardCount += PAIR;
 
