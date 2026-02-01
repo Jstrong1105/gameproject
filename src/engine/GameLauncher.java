@@ -5,8 +5,6 @@ import playerecord.PlayerRecord;
 import util.GameSleeper;
 import util.InputHandler;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class GameLauncher {
