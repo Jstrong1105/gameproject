@@ -28,6 +28,7 @@ class MinesweeperBoard {
     // 열린 칸의 수
     private int openCellCount;
 
+    // 가로 세로 크기와 폭탄의 개수를 받는 생성자
     MinesweeperBoard(int size, int boomCount) {
         RD = new Random();
         BOARD_SIZE = size;
@@ -35,7 +36,7 @@ class MinesweeperBoard {
         openCellCount = 0;
         BOARD = new Cell[BOARD_SIZE][BOARD_SIZE];
 
-        // 새로운 보드판 끼우기
+        // 새로운 보드판 채우기
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 BOARD[i][j] = new Cell();
@@ -47,6 +48,7 @@ class MinesweeperBoard {
             int x = RD.nextInt(BOARD_SIZE);
             int y = RD.nextInt(BOARD_SIZE);
 
+            // 랜덤한 칸이 폭탄이 아니면 해당 칸을 폭탄으로 만든다.
             if (!BOARD[x][y].isMine()) {
                 BOARD[x][y].setMine(true);
                 boomCount--;
@@ -85,6 +87,7 @@ class MinesweeperBoard {
 
 
     // 플레이어가 입력한 칸을 받아서 처리하기
+    // 폭탄이면 true 반환
     boolean openCell(int x, int y) {
 
         if (isOutOfBounds(x, y)) {

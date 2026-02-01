@@ -7,7 +7,7 @@ import util.InputHandler;
 
 public class MinesweeperLauncher extends GameTemplate {
 
-    private static final int OPEN_NUMBER = 1;
+    private final int OPEN_NUMBER = 1;
     private final int FLAG_NUMBER = 2;
     private final int BOARD_SIZE;
     private final int WEIGHT;
@@ -61,12 +61,6 @@ public class MinesweeperLauncher extends GameTemplate {
 
         System.out.println();
 
-        for(int i = 0; i < BOARD_SIZE * 4 + 6; i++) {
-            System.out.print("=");
-        }
-
-        System.out.println();
-
         board.printBoard();
     }
 
@@ -93,27 +87,28 @@ public class MinesweeperLauncher extends GameTemplate {
         if(openFlag == FLAG_NUMBER)
         {
             board.flagCell(playerRow,playerCol);
-            return;
         }
 
-        if(first){
-            first = false;
-            board.firstMine(playerRow,playerCol);
-        }
+        else if(openFlag == OPEN_NUMBER) {
+            if (first) {
+                first = false;
+                board.firstMine(playerRow, playerCol);
+            }
 
-        if(board.openCell(playerRow,playerCol)) {
-
-            finish(new GameResult(GameResultType.LOSE));
-        }
-        else {
-            if(board.clearCheck()){
-                finish(new GameResult(GameResultType.WIN));
+            if (board.openCell(playerRow, playerCol)) {
+                finish(new GameResult(GameResultType.LOSE));
+            }
+            else {
+                if (board.clearCheck()) {
+                    finish(new GameResult(GameResultType.WIN));
+                }
             }
         }
     }
 
     @Override
     protected void finish(GameResult result) {
+
         board.openBoom();
         render();
         System.out.println("게임이 종료되었습니다.");

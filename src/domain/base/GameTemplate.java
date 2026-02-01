@@ -9,7 +9,7 @@ import util.InputHandler;
 public abstract class GameTemplate implements GameProcess{
 
     // 실행 중 여부
-    protected boolean playing = false;
+    private boolean playing = false;
 
     // 외부에서 실행할 메소드 (실행 흐름)
     @Override

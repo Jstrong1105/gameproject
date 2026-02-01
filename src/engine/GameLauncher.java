@@ -12,7 +12,7 @@ public class GameLauncher {
     private static final GameOption GAME_OPTION = new GameOption();
     private static final int OPTION = GameHub.values().length + 1;
     private static final int EXIT = OPTION + 1;
-    private static HashMap<String, PlayerRecord> players;
+    public static HashMap<String, PlayerRecord> players;
     private static String playerId;
 
     public static void main(String[] args){
@@ -58,6 +58,7 @@ public class GameLauncher {
     }
 
     static boolean login(){
+
         boolean run = true;
 
         // 저장된 파일 불러오기
@@ -95,8 +96,8 @@ public class GameLauncher {
         return true;
     }
 
-    static void setOption()
-    {
+    static void setOption() {
+
         boolean run = true;
 
         while(run) {
