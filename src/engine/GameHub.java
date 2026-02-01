@@ -9,7 +9,6 @@ import domain.minesweeper.MinesweeperLauncher;
 import domain.minesweeper.MinesweeperOptionMenu;
 import domain.pokergamble.PokerGambleLauncher;
 import domain.pokergamble.PokerGambleOptionMenu;
-import util.InputHandler;
 
 public enum GameHub {
 

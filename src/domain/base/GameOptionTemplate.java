@@ -1,7 +1,5 @@
 package domain.base;
 
-import util.InputHandler;
-
 public interface GameOptionTemplate<T>{
 
     @FunctionalInterface

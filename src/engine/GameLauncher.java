@@ -19,8 +19,7 @@ public class GameLauncher {
 
     public static void main(String[] args){
 
-       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-       boolean run = false;
+       boolean run;
        System.out.println("로딩중입니다.");
        GameSleeper.sleepGame(3);
 
