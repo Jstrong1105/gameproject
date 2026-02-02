@@ -2,9 +2,12 @@ package playerecord;
 
 import engine.GameHub;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class PlayerRecord {
+public class PlayerRecord implements Serializable {
+
+   private static final long serialVersionUID = 1L;
 
    private final HashMap<GameHub,Integer> clearCount = new HashMap<>();
    private final HashMap<GameHub,Integer> clearTime = new HashMap<>();

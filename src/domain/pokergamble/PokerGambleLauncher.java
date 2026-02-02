@@ -4,7 +4,15 @@ import domain.TrumpCard.CardDeck;
 import domain.base.GameResult;
 import domain.base.GameResultType;
 import domain.base.GameTemplate;
+import engine.GameHub;
+import engine.GameLauncher;
+import playerecord.PlayerRecord;
+import playerecord.RecordSaveLoad;
+import sun.security.ssl.Record;
 import util.InputHandler;
+
+import java.time.Duration;
+import java.time.Instant;
 
 public class PokerGambleLauncher extends GameTemplate {
 
@@ -12,6 +20,7 @@ public class PokerGambleLauncher extends GameTemplate {
         five = option.getFS();
         weight = option.getWeight();
         targetCoin = option.getTargetCoin();
+        record = RecordSaveLoad.record.get(GameLauncher.playerId);
     }
 
     private final boolean five;
@@ -34,10 +43,30 @@ public class PokerGambleLauncher extends GameTemplate {
     private PokerRankingResult playerResult;
     private PokerRankingResult cpuResult;
 
+    private Instant startTime;
+    private Instant endTime;
+
+    private final PlayerRecord record;
+
     @Override
     protected void initialize() {
 
         System.out.println("포커겜블 게임입니다.");
+
+        System.out.println("당신의 클리어 횟수 : " + record.getCount(GameHub.POKER_GAMBLE));
+
+        int clearTime = record.getTime(GameHub.POKER_GAMBLE);
+
+        if(clearTime == Integer.MAX_VALUE){
+            System.out.println("아직 클리어 기록이 없습니다.");
+        }
+        else{
+            System.out.println("당신의 최단 기록 : " + clearTime);
+        }
+
+        InputHandler.clearBuffer();
+
+        InputHandler.readString("신기록에 도전하세요!");
 
         if(five){
             cardCount = 5;
@@ -54,6 +83,8 @@ public class PokerGambleLauncher extends GameTemplate {
         InputHandler.clearBuffer();
         int level = InputHandler.readIntRange("난이도를 입력해주세요.",minLevel,maxLevel);
         playerCoin = targetCoin / LEVEL_LIST[level-1];
+
+        startTime = Instant.now();
 
         roundInitialize();
     }
@@ -171,6 +202,16 @@ public class PokerGambleLauncher extends GameTemplate {
 
         if(playerCoin >= targetCoin){
             System.out.println("축하합니다. 목표코인을 달성했습니다.");
+            endTime = Instant.now();
+            Duration clearTime = Duration.between(startTime,endTime);
+            System.out.println("클리어 타임 : " + clearTime.getSeconds() + "초");
+
+            PlayerRecord record = RecordSaveLoad.record.get(GameLauncher.playerId);
+            record.addCount(GameHub.POKER_GAMBLE);
+            record.setTime(GameHub.POKER_GAMBLE,(int)clearTime.getSeconds());
+
+            RecordSaveLoad.saveRecord();
+
             setPlaying(false);
         }
         else if(playerCoin <= 0){

@@ -3,7 +3,14 @@ package domain.minesweeper;
 import domain.base.GameResult;
 import domain.base.GameResultType;
 import domain.base.GameTemplate;
+import engine.GameHub;
+import engine.GameLauncher;
+import playerecord.PlayerRecord;
+import playerecord.RecordSaveLoad;
 import util.InputHandler;
+
+import java.time.Duration;
+import java.time.Instant;
 
 public class MinesweeperLauncher extends GameTemplate {
 
@@ -22,10 +29,16 @@ public class MinesweeperLauncher extends GameTemplate {
     private int openFlag;
     private boolean first;
 
+    private Instant startTime;
+    private Instant endTime;
+
+    private final PlayerRecord record;
+
     public MinesweeperLauncher(MinesweeperOption option)
     {
         BOARD_SIZE = option.getSize();
         WEIGHT = option.getWeight();
+        record = RecordSaveLoad.record.get(GameLauncher.playerId);
     }
 
     @Override
@@ -35,6 +48,20 @@ public class MinesweeperLauncher extends GameTemplate {
 
         System.out.println("지뢰찾기 게임입니다.");
 
+        System.out.println("당신의 클리어 횟수 : " + record.getCount(GameHub.MINESWEEPER));
+
+        int clearTime = record.getTime(GameHub.MINESWEEPER);
+
+        if(clearTime == Integer.MAX_VALUE){
+            System.out.println("아직 클리어 기록이 없습니다.");
+        }
+        else {
+            System.out.println("당신의 최단 기록 : " + clearTime);
+        }
+
+        InputHandler.clearBuffer();
+        InputHandler.readString("신기록에 도전하세요!");
+
         int level = InputHandler.readIntRange("난이도를 입력해주세요.",MIN_LEVEL,MAX_LEVEL);
 
         int boomCount = BOARD_SIZE * BOARD_SIZE / LEVEL_LIST[level-1] * WEIGHT;
@@ -42,6 +69,8 @@ public class MinesweeperLauncher extends GameTemplate {
         board = new MinesweeperBoard(BOARD_SIZE,boomCount);
 
         first = true;
+
+        startTime = Instant.now();
     }
 
     @Override
@@ -115,6 +144,14 @@ public class MinesweeperLauncher extends GameTemplate {
 
         if(result.isWin()){
             System.out.println("축하합니다. 모든 폭탄을 찾아냈습니다.");
+            endTime = Instant.now();
+            Duration clearTime = Duration.between(startTime,endTime);
+            System.out.println("클리어 시간 : " + clearTime.getSeconds() + "초");
+            PlayerRecord record = RecordSaveLoad.record.get(GameLauncher.playerId);
+
+            record.setTime(GameHub.MINESWEEPER,(int)clearTime.getSeconds());
+            record.addCount(GameHub.MINESWEEPER);
+            RecordSaveLoad.saveRecord();
         }
         else{
             System.out.println((playerRow+1) +"열 " + (playerCol+1) + "행은 폭탄입니다.");

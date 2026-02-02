@@ -5,9 +5,15 @@ import domain.TrumpCard.CardPrinter;
 import domain.base.GameResult;
 import domain.base.GameResultType;
 import domain.base.GameTemplate;
+import engine.GameHub;
+import engine.GameLauncher;
+import playerecord.PlayerRecord;
+import playerecord.RecordSaveLoad;
 import util.GameSleeper;
 import util.InputHandler;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +27,13 @@ public class MemoryGameLauncher extends GameTemplate {
         PAIR = option.getPair();
         WEIGHT = option.getWeight();
         printer = new CardPrinter();
+        record = RecordSaveLoad.record.get(GameLauncher.playerId);
     }
+
+    private final PlayerRecord record;
+
+    private Instant startTime;
+    private Instant endTime;
 
     private final int SIZE;
     private final int PAIR;
@@ -43,6 +55,19 @@ public class MemoryGameLauncher extends GameTemplate {
 
         System.out.println("메모리 게임입니다.");
 
+        System.out.println("당신의 클리어 횟수 : " + record.getCount(GameHub.MEMORY_GAME));
+
+        int clearTime = record.getTime(GameHub.MEMORY_GAME);
+
+        if(clearTime == Integer.MAX_VALUE){
+            System.out.println("아직 클리어 기록이 없습니다.");
+        }
+        else {
+            System.out.println("당신의 최단기록 : " + clearTime);
+        }
+        InputHandler.clearBuffer();
+        InputHandler.readString("신기록에 도전하세요!");
+
         for(int i = 0; i < SIZE*PAIR; i++){
             board.drawCard(i).openCard();
         }
@@ -57,6 +82,8 @@ public class MemoryGameLauncher extends GameTemplate {
         for(int i = 0; i < SIZE*PAIR; i++){
             board.drawCard(i).hiddenCard();
         }
+
+        startTime = Instant.now();
     }
 
     @Override
@@ -124,7 +151,14 @@ public class MemoryGameLauncher extends GameTemplate {
     @Override
     protected void finish(GameResult result) {
 
+        endTime = Instant.now();
         System.out.println("모든 카드를 맞췄습니다.");
+        Duration clearTime  = Duration.between(startTime,endTime);
+        System.out.println("클리어 시간 : " + clearTime.getSeconds() + "초");
+
+        record.addCount(GameHub.MEMORY_GAME);
+        record.setTime(GameHub.MEMORY_GAME,(int)clearTime.getSeconds());
+        RecordSaveLoad.saveRecord();
         setPlaying(false);
     }
     

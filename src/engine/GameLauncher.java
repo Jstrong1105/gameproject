@@ -2,28 +2,23 @@ package engine;
 
 import domain.base.GameOption;
 import playerecord.PlayerRecord;
+import playerecord.RecordSaveLoad;
 import util.GameSleeper;
 import util.InputHandler;
-
-import java.util.HashMap;
 
 public class GameLauncher {
 
     private static final GameOption GAME_OPTION = new GameOption();
     private static final int OPTION = GameHub.values().length + 1;
     private static final int EXIT = OPTION + 1;
-    public static HashMap<String, PlayerRecord> players;
-    private static String playerId;
+
+    public static String playerId;
 
     public static void main(String[] args){
 
        boolean run;
        System.out.println("로딩중입니다.");
        GameSleeper.sleepGame(3);
-
-       // 테스트용
-       players = new HashMap<>();
-       players.put("player1",new PlayerRecord());
 
        run = login();
 
@@ -61,14 +56,16 @@ public class GameLauncher {
 
         boolean run = true;
 
-        // 저장된 파일 불러오기
+        RecordSaveLoad.loadRecord();
+
+        InputHandler.clearBuffer();
 
         while(run){
 
             int num = InputHandler.readIntRange("1. 로그인 / 2. 회원가입",1,2);
             if(num == 1){
                 playerId = InputHandler.readString("아이디를 입력하세요.");
-                if(players.containsKey(playerId)){
+                if(RecordSaveLoad.record.containsKey(playerId)){
                     System.out.println("로그인 성공");
                     run = false;
                 }
@@ -81,12 +78,13 @@ public class GameLauncher {
                 while(running) {
                     String newId = InputHandler.readString("가입할 아이디를 입력하세요.");
 
-                    if (players.containsKey(newId)) {
+                    if (RecordSaveLoad.record.containsKey(newId)) {
                         System.out.println("이미 존재하는 아이디입니다.");
                     }
                     else {
-                        players.put(newId,new PlayerRecord());
+                        RecordSaveLoad.record.put(newId,new PlayerRecord());
                         System.out.println("회원가입 완료");
+                        RecordSaveLoad.saveRecord();
                         running = false;
                     }
                 }
